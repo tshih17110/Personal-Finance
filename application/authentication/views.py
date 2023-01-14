@@ -24,22 +24,24 @@ from plaid.model.link_token_create_request_user import LinkTokenCreateRequestUse
 from plaid.model.item_public_token_exchange_request import ItemPublicTokenExchangeRequest
 from plaid.model.products import Products
 from plaid.model.country_code import CountryCode
+from .plaid_config import PlaidConfig
 
-from finance.models import PlaidToken
+from authentication.models import PlaidToken
 
-load_dotenv()
+# load_dotenv()
 
-configuration = plaid.Configuration(
-    host=plaid.Environment.Sandbox,
-    api_key={
-        'clientId': os.getenv('PLAID_CLIENT_ID'),
-        'secret': os.getenv('PLAID_SECRET')
-    }
-)
+# configuration = plaid.Configuration(
+#     host=plaid.Environment.Sandbox,
+#     api_key={
+#         'clientId': os.getenv('PLAID_CLIENT_ID'),
+#         'secret': os.getenv('PLAID_SECRET')
+#     }
+# )
 
-api_client = plaid.ApiClient(configuration)
-client = plaid_api.PlaidApi(api_client)
-
+# api_client = plaid.ApiClient(configuration)
+# client = plaid_api.PlaidApi(api_client)
+plaid_config = PlaidConfig(plaid.Environment.Sandbox)
+client = plaid_config.client()
 
 def index(request):
     context = {}

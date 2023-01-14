@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from finance import PlaidToken
+from authentication import PlaidToken
 
 class PlaidTokenSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

@@ -16,7 +16,7 @@
             // console.log("CSRF token: " + csrftoken);
             (async function() {
                 const fetchLinkToken = async () => {
-                    const response = await fetch('/finance/create_link_token', { method: 'POST' });
+                    const response = await fetch('/authentication/create_link_token', { method: 'POST' });
                     const responseJSON = await response.json();
                     console.log(responseJSON); // View link token data 
                     return responseJSON.link_token;
@@ -31,7 +31,7 @@
                         // 2a. Send the public_token to your app server.
                         // The onSuccess function is called when the user has successfully
                         // authenticated and selected an account to use.
-                        await fetch('/finance/exchange_public_token', {
+                        await fetch('/authentication/exchange_public_token', {
                             method: 'POST',
                             body: JSON.stringify({ public_token: public_token }),
                         });

@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from finance import views
+from authentication import views
 from rest_framework import routers
 
 
 urlpatterns = [    
     path('', include('frontend.urls')),
-    path('finance/', include('finance.urls')),
+    path('authentication/', include('authentication.urls')),
     path('admin/', admin.site.urls),
 ]
