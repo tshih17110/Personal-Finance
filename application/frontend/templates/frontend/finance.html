@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+        <title>Personal Finance App</title>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Personal Finance</h1>
+        </div>    
+        <div class="footer">
+            <p>Created by Thomas Shih. 2023</p>
+        </div>
+
+        <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+        <script type="text/javascript">
+            (async function() {
+                console.log("HERE");
+                const accountBalance = async () => {
+                    const response = await fetch('/finance/account_balance', {method: 'POST'});
+                    const responseJSON = await response.json();
+                    console.log(responseJSON);
+                }
+            })();
+
+        </script>
+    </body>
+</html>

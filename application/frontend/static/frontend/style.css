@@ -3,6 +3,7 @@
 :root {
     --header: #003459;
     --text: #00A8E8;
+    --white_text: #fff;
     --gray_text: #999999;
     --white: #fff;
     --footer: #003459;
@@ -26,7 +27,7 @@ body {
     font-family: Roboto, sans-serif;
     background-color: var(--header);
     background-image: radial-gradient(100% 100% at 100% 0, var(--text) 0, var(--header) 100%);
-    color: var(--text);
+    color: var(--white_text);
     padding-left: 50px;
 }
 

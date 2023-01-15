@@ -6,11 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% load static %}
         <link rel="stylesheet" href="{% static 'frontend/style.css' %}">
-        <title>Personal Finance Application</title>
+        <title>Login</title>
     </head>
     <body>
         <div class="header">
-            <h1>Personal Finance</h1>
+            <h1>Personal Finance - Plaid Login</h1>
         </div>
         <div class="plaid-link-">
             <button id="link-button">LINK ACCOUNT</button>    
@@ -36,7 +36,6 @@
                     token: await fetchLinkToken(),
                     onSuccess: async function(public_token, metadata) {
                         console.log(public_token)
-                        console.log(typeof public_token)
                         // 2a. Send the public_token to your app server.
                         // The onSuccess function is called when the user has successfully
                         // authenticated and selected an account to use.
@@ -44,6 +43,7 @@
                             method: 'POST',
                             body: JSON.stringify({ public_token: public_token }),
                         });
+                        location.href = '/finance';
                     },
 
                     onExit: async function(err, metadata) {
@@ -66,7 +66,6 @@
                     },
                 };
                 var linkHandler = Plaid.create(configs);
-                console.log(linkHandler);
                 document.getElementById('link-button').onclick = function() {
                     linkHandler.open();
                 };
