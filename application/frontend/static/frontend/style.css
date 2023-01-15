@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+    --header: #003459;
+    --text: #00A8E8;
+    --gray_text: #999999;
+    --white: #fff;
+    --footer: #003459;
+    --footer_text: #007EA7;
+    --light_shadow: #002D4D;
+    --shadow: #001E33;
+}
+
+
+body {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100vh;
+}
+
+.header {
+    display: flex;
+    justify-content: left;
+    font-family: Roboto, sans-serif;
+    background-color: var(--header);
+    background-image: radial-gradient(100% 100% at 100% 0, var(--text) 0, var(--header) 100%);
+    color: var(--text);
+    padding-left: 50px;
+}
+
+.plaid-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#link-button {
+    margin: 0 auto;
+    align-items: center;
+    appearance: none;
+    background-image: radial-gradient(100% 100% at 100% 0, var(--text) 0, var(--header) 100%);
+    border: 0;
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    font-family: Roboto, sans-serif;
+    height: 48px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+    font-size: 18px;
+}
+
+#link-button:focus {
+    box-shadow: var(--light_shadow) 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, var(--shadow) 0 -3px 0 inset;
+}
+
+#link-button:hover {
+    box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, var(--light_shadow) 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+#link-button:active {
+    box-shadow: var(--light_shadow) 0 3px 7px inset;
+    transform: translateY(2px);
+}
+
+
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto, sans-serif;
+    background-color: var(--footer);
+    padding: 25px 0 25px 0;
+}
+
+.footer p {
+    opacity: 0.8;
+    color: var(--footer_text);
+}
+
+

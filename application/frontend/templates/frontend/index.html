@@ -4,16 +4,25 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+        <title>Personal Finance Application</title>
     </head>
     <body>
-        <button id="link-button">Link Account</button>
+        <div class="header">
+            <h1>Personal Finance</h1>
+        </div>
+        <div class="plaid-link-">
+            <button id="link-button">LINK ACCOUNT</button>    
+        </div>
+        
+        <div class="footer">
+            <p>Created by Thomas Shih. 2023</p>
+        </div>
+
         <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <!-- {% csrf_token %} -->
         <script type="text/javascript">
-            // var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-            // console.log("CSRF token: " + csrftoken);
             (async function() {
                 const fetchLinkToken = async () => {
                     const response = await fetch('/authentication/create_link_token', { method: 'POST' });

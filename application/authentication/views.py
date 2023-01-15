@@ -28,18 +28,6 @@ from .plaid_config import PlaidConfig
 
 from authentication.models import PlaidToken
 
-# load_dotenv()
-
-# configuration = plaid.Configuration(
-#     host=plaid.Environment.Sandbox,
-#     api_key={
-#         'clientId': os.getenv('PLAID_CLIENT_ID'),
-#         'secret': os.getenv('PLAID_SECRET')
-#     }
-# )
-
-# api_client = plaid.ApiClient(configuration)
-# client = plaid_api.PlaidApi(api_client)
 plaid_config = PlaidConfig(plaid.Environment.Sandbox)
 client = plaid_config.client()
 
@@ -47,10 +35,7 @@ def index(request):
     context = {}
     return render(request, "index.html", context)
 
-
 @csrf_exempt
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
 def create_link_token(request):
     try:
         user_id = settings.PLAID_CLIENT_ID
@@ -79,5 +64,5 @@ def exchange_public_token(request):
         os.environ['ACCESS_TOKEN'] = access_token
         os.environ['ITEM_ID'] = item_id
         return JsonResponse(response.to_dict())
-    except plaid.ApiException as e:
+    except ApiException as e:
         return json.dumps(e.body)
