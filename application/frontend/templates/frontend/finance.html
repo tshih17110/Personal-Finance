@@ -12,6 +12,20 @@
         <div class="header">
             <h1>Personal Finance</h1>
         </div>    
+
+        <div class="balance">
+            <div class="accounts">
+                <h3>ACCOUNTS</h3>
+                <div id="account-list"></div>
+            </div>
+            <div class="account-details">
+                <h3>DETAILS</h3>
+                <div id="details"></div>
+            </div>
+        </div>
+
+
+        
         <div class="footer">
             <p>Created by Thomas Shih. 2023</p>
         </div>
@@ -19,12 +33,33 @@
         <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
         <script type="text/javascript">
             (async function() {
-                console.log("HERE");
                 const accountBalance = async () => {
-                    const response = await fetch('/finance/account_balance', {method: 'POST'});
+                    const response = await fetch('/finance/balance/account_balance', {method: 'POST'});
                     const responseJSON = await response.json();
-                    console.log(responseJSON);
+                    return responseJSON;
                 }
+                const balanceDetails = await accountBalance();
+
+                var balanceData = '';
+                balanceDetails.accounts.forEach(account => displayBalance(account));
+
+                // Extracts balance details from account, converts to html 
+                function displayBalance(account) {
+                    balanceData += '<div class="account-item" id="' +
+                        account.account_id +
+                        '">' +
+                        account.name +
+                        ' (' +
+                        (account.balances.available ? account.balances.available : 0) +
+                        '/' +
+                        (account.balances.current ? account.balances.current : 0) +
+                        ' ' +
+                        account.balances.iso_currency_code +
+                        ')' +
+                        '</div>';
+                    
+                }
+                document.getElementById('account-list').innerHTML = balanceData;
             })();
 
         </script>

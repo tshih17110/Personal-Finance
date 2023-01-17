@@ -4,6 +4,7 @@
     --header: #003459;
     --text: #00A8E8;
     --white_text: #fff;
+    --light_blue_text: #B3DFFF;
     --gray_text: #999999;
     --white: #fff;
     --footer: #003459;
@@ -19,6 +20,7 @@ body {
     flex-direction: column;
     margin: 0;
     min-height: 100vh;
+    background-color: #b3dfff;
 }
 
 .header {
@@ -27,9 +29,10 @@ body {
     font-family: Roboto, sans-serif;
     background-color: var(--header);
     background-image: radial-gradient(100% 100% at 100% 0, var(--text) 0, var(--header) 100%);
-    color: var(--white_text);
+    color: var(--light_blue_text);
     padding-left: 50px;
 }
+
 
 .plaid-link {
     display: flex;
@@ -97,6 +100,29 @@ body {
 .footer p {
     opacity: 0.8;
     color: var(--footer_text);
+}
+
+.balance {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-family: Roboto, sans-serif;
+    gap: 10px
+}
+
+.accounts {
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 500px;
+    min-height: 250px;
+}
+
+.account-details {
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 750px;
 }
 
 
