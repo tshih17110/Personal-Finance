@@ -13,15 +13,20 @@
             <h1>Personal Finance</h1>
         </div>    
 
-        <div class="balance">
-            <div class="accounts">
+        <div class="finances">
+            <div class="accounts-column">
                 <h3>ACCOUNTS</h3>
-                <div id="account-list"></div>
+                <div class="accounts">
+                    <div id="account-list"></div>
+                </div>
             </div>
-            <div class="account-details">
-                <h3>DETAILS</h3>
-                <div id="details"></div>
+            <div class="transactions-column">
+                <h3>TRANSACTIONS</h3>
+                <div class="account-transactions">
+                    <div id="transactions"></div>
+                </div>    
             </div>
+
         </div>
 
 
@@ -38,14 +43,23 @@
                     const responseJSON = await response.json();
                     return responseJSON;
                 }
-                const balanceDetails = await accountBalance();
 
-                var balanceData = '';
+                const accountTransactions = async() => {
+                    const response = await fetch('/finance/transactions/get_transactions', {method: 'POST'});
+                    const responseJSON = await response.json();
+                    return responseJSON;
+                    return response;
+                }
+
+                const balanceDetails = await accountBalance();
+                const transactionsDetails = await accountTransactions();
+
+                var balance_data = '';
                 balanceDetails.accounts.forEach(account => displayBalance(account));
 
                 // Extracts balance details from account, converts to html 
                 function displayBalance(account) {
-                    balanceData += '<div class="account-item" id="' +
+                    balance_data += '<div class="account-item" id="' +
                         account.account_id +
                         '">' +
                         account.name +
@@ -59,7 +73,47 @@
                         '</div>';
                     
                 }
-                document.getElementById('account-list').innerHTML = balanceData;
+                document.getElementById('account-list').innerHTML = balance_data;
+                
+                
+                
+
+                document.getElementById('account-list').addEventListener('click', function(event) {
+                    var transactions_data = '';
+                    var target_account_id = event.toElement.id;
+                    
+                    var target_transactions = [];
+                    var all_transactions = transactionsDetails.transactions;
+
+
+                    all_transactions.forEach(transaction => {
+                        if (transaction.account_id == target_account_id) {
+                            target_transactions.push(transaction);
+                        }
+                    });
+
+                    target_transactions.forEach(transaction => displayTransactions(transaction));
+
+                    function displayTransactions(transaction) {
+                        transactions_data += '<div class="transactions-item' +
+                            (transaction.amount < 0 ? '">' : ' transactions-item-negative">') +
+                            transaction.date +
+                            ' ' +
+                            -transaction.amount +
+                            ' ' +
+                            transaction.iso_currency_code +
+                            ' - ' +
+                            transaction.name +
+                            '</div>'
+                    }
+                    document.getElementById('transactions').innerHTML = transactions_data;
+                });
+
+
+
+
+
+
             })();
 
         </script>
