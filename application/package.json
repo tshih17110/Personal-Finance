@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "chart.js": "^4.2.0",
+    "chartjs-plugin-autocolors": "^0.2.1",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "js-cookie": "^3.0.1"
   }
 }

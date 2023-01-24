@@ -12,7 +12,13 @@
         <div class="header">
             <h1>Personal Finance</h1>
         </div>    
-
+        <div class="chart">
+            <h3>CHARTS</h3>            
+            <div class="chart-data">
+                <canvas id="summary-chart" style="width:100%;max-width:700px;max-height:400px"></canvas>
+                <canvas id="doughnut-chart" style="width:100%;max-width:300px;max-height:400px"></canvas>
+            </div>
+        </div>
         <div class="finances">
             <div class="accounts-column">
                 <h3>ACCOUNTS</h3>
@@ -28,12 +34,13 @@
             </div>
 
         </div>
-
-
-        
         <div class="footer">
             <p>Created by Thomas Shih. 2023</p>
         </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
         <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
         <script type="text/javascript">
@@ -43,16 +50,120 @@
                     const responseJSON = await response.json();
                     return responseJSON;
                 }
-
                 const accountTransactions = async() => {
                     const response = await fetch('/finance/transactions/get_transactions', {method: 'POST'});
                     const responseJSON = await response.json();
                     return responseJSON;
                     return response;
                 }
-
                 const balanceDetails = await accountBalance();
                 const transactionsDetails = await accountTransactions();
+                console.log(transactionsDetails);
+
+                var category_spending = {};
+                transactionsDetails.transactions.forEach(transaction => {
+                    if (transaction.category[0] in category_spending) {
+                        category_spending[transaction.category[0]] += transaction.amount;
+                    } else {
+                        category_spending[transaction.category[0]] = transaction.amount;
+                    }
+                });             
+                for (const [key, value] of Object.entries(category_spending)) {
+                    category_spending[key] = value.toFixed(2);
+                }
+                delete category_spending['Transfer'];
+                var xValues = Object.keys(category_spending);
+                var yValues = Object.values(category_spending);
+                
+                var total = 0;
+                var category_spending_percent = {}
+                for (var i in category_spending) {
+                    total += parseFloat(category_spending[i]);
+                }
+                for (const [key, value] of Object.entries(category_spending)) {
+                    category_spending_percent[key] = ((parseFloat(value)/total)*100).toFixed(1);
+                    // xValuesPercent.push((parseFloat(value)/total)*100);
+                }
+                var yValuesPercent = Object.values(category_spending_percent);
+
+                barColor = ['rgba(255, 99, 132, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 205, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(201, 203, 207, 1)'];
+                borderColor = ['rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'];
+
+                Chart.register(ChartDataLabels);
+                new Chart("summary-chart", {
+                    type: "bar",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            data: yValues,
+                            barPercentage: 1,
+                            categoryPercentage: 0.8,
+                            backgroundColor: barColor,
+                            borderColor: borderColor,
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            datalabels: {
+                                anchor: 'end',
+                                align: 'end',
+                                formatter: function(value) {
+                                    return '$' + value;
+                                },
+                            }
+                        },
+                        scales: {
+                            y: {
+                                ticks: {
+                                    callback: function(value, index, ticks) {
+                                        return '$' + value;
+                                    }
+                                }
+                            },
+                        }
+                    }
+                });
+                new Chart("doughnut-chart", {
+                    type: "doughnut",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            data: yValuesPercent,
+                            backgroundColor: barColor,
+                            borderColor: borderColor,
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            datalabels: {
+                                anchor: 'center',
+                                display: 'auto',
+                                formatter: function(value) {
+                                    return value + '%';
+                                },
+                            }
+                        },
+                    }
+                });
 
                 var balance_data = '';
                 balanceDetails.accounts.forEach(account => displayBalance(account));
@@ -74,10 +185,7 @@
                     
                 }
                 document.getElementById('account-list').innerHTML = balance_data;
-                
-                
-                
-
+                                
                 document.getElementById('account-list').addEventListener('click', function(event) {
                     var transactions_data = '';
                     var target_account_id = event.toElement.id;

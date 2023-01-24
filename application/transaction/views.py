@@ -33,7 +33,7 @@ def get_transactions(request):
     # )
     plaid_request = TransactionsGetRequest(
         access_token = os.getenv('ACCESS_TOKEN'),
-        start_date = (datetime.date.today() - relativedelta(years=1)),
+        start_date = (datetime.date.today() - relativedelta(months=1)),
         end_date = datetime.date.today(),
     )
     response = plaid_client.transactions_get(plaid_request)

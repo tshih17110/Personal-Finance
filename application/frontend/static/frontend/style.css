@@ -11,6 +11,7 @@
     --footer_text: #007EA7;
     --light_shadow: #002D4D;
     --shadow: #001E33;
+    --hover_shadow: #005999;
 }
 
 
@@ -31,6 +32,12 @@ body {
     background-image: radial-gradient(100% 100% at 100% 0, var(--text) 0, var(--header) 100%);
     color: var(--light_blue_text);
     padding-left: 50px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.header:hover {
+    cursor: default;
 }
 
 
@@ -86,13 +93,12 @@ body {
     transform: translateY(2px);
 }
 
-
-
 .footer {
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: Roboto, sans-serif;
+    margin-top: 20px;
     background-color: var(--footer);
     padding: 25px 0 25px 0;
 }
@@ -102,18 +108,39 @@ body {
     color: var(--footer_text);
 }
 
+.chart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: Roboto, sans-serif;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.chart-data {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-evenly; */
+    border: 2px solid;
+    border-radius: 5px;   
+    min-width: 1305px;
+    min-height: 250px; 
+    max-width: 1305px;
+    max-height: 500px;
+    gap: 20px;
+}
+
 .finances {
     display: flex;
     flex-direction: row;
     justify-content: center;
     font-family: Roboto, sans-serif;
-    gap: 10px
+    gap: 10px;
 }
 
 .account-column {
     display: flex;
     flex-direction: column;
-    
 }
 
 .transaction-column {
@@ -129,6 +156,12 @@ body {
     min-height: 250px;
     overflow-y: auto;
     overflow-x: auto;
+    user-select: none;
+}
+
+.account-item:hover{
+    background: var(--hover_shadow); 
+    cursor: default;   
 }
 
 .account-transactions {
