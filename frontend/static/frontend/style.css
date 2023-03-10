@@ -21,7 +21,7 @@ body {
     flex-direction: column;
     margin: 0;
     min-height: 100vh;
-    background-color: #b3dfff;
+    background-color: #e6f4ff;
 }
 
 .header {
@@ -30,7 +30,7 @@ body {
     font-family: Roboto, sans-serif;
     background-color: var(--header);
     background-image: radial-gradient(100% 100% at 100% 0, var(--text) 0, var(--header) 100%);
-    color: var(--light_blue_text);
+    color: var(--white_text);
     padding-left: 50px;
     user-select: none;
     -webkit-user-select: none;
@@ -120,7 +120,6 @@ body {
 .chart-data {
     display: flex;
     flex-direction: row;
-    /* justify-content: space-evenly; */
     border: 2px solid;
     border-radius: 5px;   
     min-width: 1305px;

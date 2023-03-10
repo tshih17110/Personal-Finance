@@ -35,13 +35,11 @@
 
         </div>
         <div class="footer">
-            <p>Created by Thomas Shih. 2023</p>
+            <p>Thomas Shih | 2023</p>
         </div>
-
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-
         <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
         <script type="text/javascript">
             (async function() {
@@ -58,7 +56,7 @@
                 }
                 const balanceDetails = await accountBalance();
                 const transactionsDetails = await accountTransactions();
-                console.log(transactionsDetails);
+                // console.log(transactionsDetails);
 
                 var category_spending = {};
                 transactionsDetails.transactions.forEach(transaction => {
@@ -82,24 +80,25 @@
                 }
                 for (const [key, value] of Object.entries(category_spending)) {
                     category_spending_percent[key] = ((parseFloat(value)/total)*100).toFixed(1);
-                    // xValuesPercent.push((parseFloat(value)/total)*100);
                 }
                 var yValuesPercent = Object.values(category_spending_percent);
+                
+                console.log(yValuesPercent)
+                console.log(yValuesPercent[0])
+                console.log(yValuesPercent[1])
+                
+             
+                barColor = ['#FFEE93',
+                            '#FFC09F',
+                            '#60993E',
+                            '#A0CED9',
+                            '#846A6A'];  
+                borderColor = ['#FFEE93',
+                            '#FFC09F',
+                            '#60993E',
+                            '#A0CED9',
+                            '#846A6A'];       
 
-                barColor = ['rgba(255, 99, 132, 1)',
-                            'rgba(255, 159, 64, 1)',
-                            'rgba(255, 205, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(201, 203, 207, 1)'];
-                borderColor = ['rgb(255, 99, 132)',
-                            'rgb(255, 159, 64)',
-                            'rgb(255, 205, 86)',
-                            'rgb(75, 192, 192)',
-                            'rgb(54, 162, 235)',
-                            'rgb(153, 102, 255)',
-                            'rgb(201, 203, 207)'];
 
                 Chart.register(ChartDataLabels);
                 new Chart("summary-chart", {
@@ -123,9 +122,13 @@
                             datalabels: {
                                 anchor: 'end',
                                 align: 'end',
+                                color: '#000000',
                                 formatter: function(value) {
                                     return '$' + value;
                                 },
+                            },
+                            tooltip: {
+                                enabled: false,
                             }
                         },
                         scales: {
@@ -139,6 +142,8 @@
                         }
                     }
                 });
+
+
                 new Chart("doughnut-chart", {
                     type: "doughnut",
                     data: {
@@ -154,15 +159,17 @@
                             legend: {
                                 display: false
                             },
-                            datalabels: {
-                                anchor: 'center',
-                                display: 'auto',
-                                formatter: function(value) {
-                                    return value + '%';
-                                },
-                            }
+                            datalabels: false,
+                            tooltip: {
+                                callbacks: {
+                                    label: (tooltipItem) => {
+                                        return tooltipItem.label + ': ' + tooltipItem.parsed + '%';  
+                                    }
+                                }
+                            }                            
                         },
-                    }
+                    },
+
                 });
 
                 var balance_data = '';
@@ -193,7 +200,6 @@
                     var target_transactions = [];
                     var all_transactions = transactionsDetails.transactions;
 
-
                     all_transactions.forEach(transaction => {
                         if (transaction.account_id == target_account_id) {
                             target_transactions.push(transaction);
@@ -216,12 +222,6 @@
                     }
                     document.getElementById('transactions').innerHTML = transactions_data;
                 });
-
-
-
-
-
-
             })();
 
         </script>

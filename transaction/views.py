@@ -23,14 +23,7 @@ plaid_client = plaid_config.client()
 
 
 @csrf_exempt
-# def get_transactions(request, start_date, end_date):
 def get_transactions(request):
-
-    # plaid_request = TransactionsGetRequest(
-    #     access_token = os.getenv('ACCESS_TOKEN'),
-    #     start_date = datetime.strptime('2022-01-19', '%Y-%m-%d').date(),
-    #     end_date = datetime.strptime('2023-01-19', '%Y-%m-%d').date(),
-    # )
     plaid_request = TransactionsGetRequest(
         access_token = os.getenv('ACCESS_TOKEN'),
         start_date = (datetime.date.today() - relativedelta(months=1)),
