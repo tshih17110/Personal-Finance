@@ -2,5 +2,5 @@
 
 Personal finance application sandbox built with Django, JavaScript, and Plaid API. Displays summary of transactions in chart format, and lists recent transactions for individual accounts.
 
-![Application example](/static/readme-img.jpg)
+<img src="./static/readme-img.jpg" title="Application example">
 
